@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.yzx.mapper.ProductMapper">
+
+	<select id="selProduct" resultType="Product">
+		select * from product
+		<where>
+			<if test="productname!=null and productname!=''">
+			and productname=#{productname}
+			</if>
+			<if test="category!=null and category!=''">
+			and category=#{category}
+			</if>
+		</where>
+		limit #{pageNumber},#{pageSize}
+	</select>
+	
+	<select id="selProductPage" resultType="Product">
+		select * from product limit #{0},#{1}		
+	</select>
+	
+	<select id="selCountProduct" resultType="int">
+		select count(*) from product		
+		<where>
+			<if test="productname!=null and productname!=''">
+				and productname=#{productname}
+			</if>
+			<if test="category!=null and category!=''">
+				and category=#{category}
+			</if>
+		</where>
+	</select>
+</mapper>

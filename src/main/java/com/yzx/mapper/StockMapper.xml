@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.StockMapper">
+
+	
+	<select id="selCountByShop" resultType="int">
+		select count(*) from stock	
+		<where>
+			<if test="shopid != null and shopid !=''">
+				and shopid=#{shopid}
+			</if>
+			<if test="shopname != null and shopname != ''">
+				and shopname like "%"#{shopname}"%"
+			</if>
+		</where>
+	</select>
+	
+	<select id="selCountByProduct" resultType="int">
+		select count(*) from stock			
+		<where>
+			<if test="productid != null and productid != ''">
+				and productid=#{productid}
+			</if>
+			<if test="productname!= null and productname != ''">
+				and productname like "%"#{productname}"%"
+			</if>
+		</where>
+	</select>
+	
+	<select id="selContentByFindShop" resultType="Stock">
+		select * from stock
+		<where>
+			<if test="shopid != 0">
+				and shopid=#{shopid}
+			</if>
+			<if test="shopname!=null and shopname!=''">
+				and shopname like "%"#{shopname}"%"
+			</if>
+		</where>
+		order by shopid,quantity,id limit #{pageNumber},#{pageSize}
+	</select>
+	
+	<select id="selContentByFindProduct" resultType="Stock">
+		select * from stock
+		<where>
+			<if test="productid != 0">
+				and productid=#{productid}
+			</if>
+			<if test="productname!=null and productname!=''">
+				and productname like "%"#{productname}"%"
+			</if>
+		</where>
+		 order by productid,quantity,id limit #{pageNumber},#{pageSize}
+	</select>
+</mapper>
